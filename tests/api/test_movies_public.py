@@ -49,3 +49,11 @@ def test_invalid_list_parameters(api_manager, params):
 
 def test_create_requires_authentication(api_manager, movie_data):
     api_manager.movies_api.create_movie(movie_data, expected_status=401)
+
+
+def test_equal_price_bounds_rejected(api_manager):
+    body = api_manager.movies_api.get_movies(
+        {"minPrice": 500, "maxPrice": 500}, expected_status=400
+    ).json()
+    assert body["statusCode"] == 400
+    assert body["message"] == "minPrice must be less than maxPrice"

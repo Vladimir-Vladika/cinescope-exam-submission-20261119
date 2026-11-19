@@ -3,13 +3,8 @@ import pytest
 pytestmark = [pytest.mark.api, pytest.mark.admin]
 
 
-@pytest.mark.parametrize(
-    "bounds", [(350, 650), (500, 500)], ids=["range", "inclusive-equal-bounds"]
-)
-def test_filter_by_price(
-    api_manager, generator, genre_id, tracked_create, bounds
-):
-    lower, upper = bounds
+def test_filter_by_price(api_manager, generator, genre_id, tracked_create):
+    lower, upper = 350, 650
     prices = sorted({lower - 1, lower, (lower + upper) // 2, upper, upper + 1})
     owned = {}
     for price in prices:
